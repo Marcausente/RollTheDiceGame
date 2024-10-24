@@ -141,6 +141,8 @@ fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) 
 @Composable
 fun DicesRollingScreen() {
     val creditos = remember { mutableStateOf(10) }  // Inicializamos con 100 créditos
+    val dado1 = remember { mutableStateOf(1) }  // Valor inicial del dado 1
+    val dado2 = remember { mutableStateOf(1) }  // Valor inicial del dado 2
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -201,6 +203,7 @@ fun DicesRollingScreen() {
                     fontSize = 20.sp,
                     color = Color.White
                 )
+
             }
         }
     }
@@ -222,3 +225,5 @@ fun PreviewDicesRollingScreen() {
         DicesRollingScreen()
     }
 }
+
+
