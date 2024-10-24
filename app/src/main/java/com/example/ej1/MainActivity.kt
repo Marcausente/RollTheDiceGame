@@ -108,13 +108,19 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier .fillMaxSize() .wrapCon
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+    // Configura el NavHost que maneja la navegación entre diferentes pantallas
     NavHost(navController = navController, startDestination = "portada") {
+        // Define la ruta de la pantalla de inicio (portada)
         composable("portada") {
+            // Muestra la pantalla de portada
             RollTheDicePortada(onJugarClick = {
+                // Navega a la pantalla de lanzamiento de dados cuando se hace clic en "Jugar"
                 navController.navigate("dicesrolling")
             })
         }
+        // Define la ruta de la pantalla de lanzamiento de dados
         composable("dicesrolling") {
+            // Muestra la pantalla de lanzamiento de dados
             DicesRollingScreen()
         }
     }
@@ -123,67 +129,75 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
 //TODO ESTO ES LA PORTADA
 @Composable
 fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) {
+    // Contenedor principal que ocupa toda la pantalla
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize() // Ocupa todo el tamaño disponible
     ) {
+        // Imagen de fondo que llena toda la pantalla
         Image(
-            contentScale = ContentScale.FillBounds,
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = "Background",
+            contentScale = ContentScale.FillBounds, // Escala la imagen para llenar el espacio
+            painter = painterResource(id = R.drawable.background), // Carga la imagen de fondo
+            contentDescription = "Background", // Descripción para accesibilidad
             modifier = Modifier
-                .fillMaxSize()
-                .matchParentSize()
+                .fillMaxSize() // Ocupa todo el tamaño disponible
+                .matchParentSize() // Asegura que coincida con el tamaño del padre
         )
 
+        // Columna que organiza los elementos verticalmente
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize() // Ocupa todo el tamaño disponible
+                .padding(20.dp), // Espaciado alrededor de la columna
+            verticalArrangement = Arrangement.SpaceBetween, // Espaciado uniforme entre los elementos
+            horizontalAlignment = Alignment.CenterHorizontally // Alineación horizontal centrada
         ) {
+            // Logo de la compañía
             Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Company Logo",
+                painter = painterResource(id = R.drawable.logo), // Carga la imagen del logo
+                contentDescription = "Company Logo", // Descripción para accesibilidad
                 modifier = Modifier
-                    .size(150.dp)
-                    .clip(RoundedCornerShape(30.dp))
+                    .size(150.dp) // Tamaño del logo
+                    .clip(RoundedCornerShape(30.dp)) // Esquinas redondeadas
             )
 
+            // Título del juego
             Text(
-                "ROLL THE DICE",
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
+                "ROLL THE DICE", // Texto que se mostrará
+                textAlign = TextAlign.Center, // Alineación centrada
+                color = Color.White, // Color del texto
+                fontSize = 40.sp, // Tamaño de la fuente
+                fontWeight = FontWeight.Bold, // Peso de la fuente (negrita)
                 modifier = Modifier
-                    .clip(RoundedCornerShape(30.dp))
-                    .background(Color.Gray.copy(alpha = 0.7f))
-                    .padding(16.dp)
-                    .padding(top = 16.dp)
+                    .clip(RoundedCornerShape(30.dp)) // Esquinas redondeadas
+                    .background(Color.Gray.copy(alpha = 0.7f)) // Fondo gris con transparencia
+                    .padding(16.dp) // Espaciado interno
+                    .padding(top = 16.dp) // Espaciado superior adicional
             )
 
+            // Imagen de los dados en el menú
             Image(
-                painter = painterResource(id = R.drawable.dicesmenu),
-                contentDescription = "Dice Image",
+                painter = painterResource(id = R.drawable.dicesmenu), // Carga la imagen de los dados
+                contentDescription = "Dice Image", // Descripción para accesibilidad
                 modifier = Modifier
-                    .size(180.dp)
-                    .clip(RoundedCornerShape(30.dp))
-                    .padding(top = 16.dp)
+                    .size(180.dp) // Tamaño de la imagen de los dados
+                    .clip(RoundedCornerShape(30.dp)) // Esquinas redondeadas
+                    .padding(top = 16.dp) // Espaciado superior
             )
 
+            // Botón para iniciar el juego
             Button(
-                onClick = onJugarClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
+                onClick = onJugarClick, // Acción a realizar al hacer clic en el botón
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)), // Color del botón
                 modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .padding(bottom = 116.dp)
-                    .padding(top = 8.dp)
+                    .clip(RoundedCornerShape(20.dp)) // Esquinas redondeadas
+                    .padding(bottom = 116.dp) // Espaciado inferior
+                    .padding(top = 8.dp) // Espaciado superior
             ) {
+                // Texto dentro del botón
                 Text(
-                    text = "Jugar",
-                    fontSize = 24.sp,
-                    color = Color.White
+                    text = "Jugar", // Texto que se mostrará en el botón
+                    fontSize = 24.sp, // Tamaño de la fuente
+                    color = Color.White // Color del texto
                 )
             }
         }
@@ -193,13 +207,16 @@ fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) 
 //PAGINA EN LA QUE RUEDAN
 @Composable
 fun DicesRollingScreen() {
-    val creditos = remember { mutableStateOf(10) }  // Inicializamos con 100 créditos
+    // Inicializamos el estado de los créditos y los dados
+    val creditos = remember { mutableStateOf(10) }  // Inicializamos con 10 créditos
     val dado1 = remember { mutableStateOf(1) }  // Valor inicial del dado 1
     val dado2 = remember { mutableStateOf(1) }  // Valor inicial del dado 2
 
+    // Contenedor principal que ocupa toda la pantalla
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
+        // Imagen de fondo
         Image(
             contentScale = ContentScale.FillBounds,
             painter = painterResource(id = R.drawable.background),
@@ -209,94 +226,98 @@ fun DicesRollingScreen() {
                 .matchParentSize()
         )
 
+        // Columna que organiza los elementos verticalmente
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(60.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(60.dp), // Espaciado alrededor de la columna
+            verticalArrangement = Arrangement.SpaceBetween, // Espaciado entre los elementos
+            horizontalAlignment = Alignment.CenterHorizontally // Alineación horizontal centrada
         ) {
 
+            // Muestra los créditos actuales
             Text(
                 text = "Créditos: ${creditos.value}",
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(30.dp))
-                    .background(Color.Gray.copy(alpha = 0.7f))
-                    .padding(16.dp)
+                    .clip(RoundedCornerShape(30.dp)) // Esquinas redondeadas
+                    .background(Color.Gray.copy(alpha = 0.7f)) // Fondo gris transparente
+                    .padding(16.dp) // Espaciado interno
             )
 
+            // Mensaje de bienvenida
             Text(
                 text = "¡Aquí es donde los dados van a rodar!",
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center, // Alineación centrada
                 color = Color.White,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(top = 16.dp) // Espaciado superior
             )
 
+            // Fila que contiene los dados
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.padding(top = 16.dp)
+                horizontalArrangement = Arrangement.SpaceEvenly, // Espaciado uniforme entre los dados
+                modifier = Modifier.padding(top = 16.dp) // Espaciado superior
             ) {
                 // Dado 1
                 Image(
-                    painter = painterResource(id = getDiceImage(dado1.value)),
+                    painter = painterResource(id = getDiceImage(dado1.value)), // Obtiene la imagen del dado según su valor
                     contentDescription = "Dado 1",
                     modifier = Modifier
-                        .size(100.dp)
-                        .clickable {
-                            if (creditos.value > 0) {
-                                creditos.value -= 1
-                                dado1.value = (1..6).random()
+                        .size(100.dp) // Tamaño del dado
+                        .clickable { // Acción al hacer clic en el dado
+                            if (creditos.value > 0) { // Verifica si hay créditos disponibles
+                                creditos.value -= 1 // Resta 1 crédito
+                                dado1.value = (1..6).random() // Genera un nuevo valor aleatorio para el dado
                             }
                         }
                 )
 
                 // Dado 2
                 Image(
-                    painter = painterResource(id = getDiceImage(dado2.value)),
+                    painter = painterResource(id = getDiceImage(dado2.value)), // Obtiene la imagen del dado según su valor
                     contentDescription = "Dado 2",
                     modifier = Modifier
-                        .size(100.dp)
-                        .clickable {
-                            if (creditos.value > 0) {
-                                creditos.value -= 1
-                                dado2.value = (1..6).random()
+                        .size(100.dp) // Tamaño del dado
+                        .clickable { // Acción al hacer clic en el dado
+                            if (creditos.value > 0) { // Verifica si hay créditos disponibles
+                                creditos.value -= 1 // Resta 1 crédito
+                                dado2.value = (1..6).random() // Genera un nuevo valor aleatorio para el dado
                             }
                         }
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp)) // Espaciador entre los dados y el botón
 
-
+            // Botón para rodar los dados
             Button(
                 onClick = {
-                    if (creditos.value > 0) {
-                        creditos.value -= 2
-                        dado1.value = (1..6).random()
-                        dado2.value = (1..6).random()
+                    if (creditos.value > 0) { // Verifica si hay suficientes créditos
+                        creditos.value -= 2 // Resta 2 créditos por lanzar los dados
+                        dado1.value = (1..6).random() // Genera un nuevo valor aleatorio para el dado 1
+                        dado2.value = (1..6).random() // Genera un nuevo valor aleatorio para el dado 2
 
-                        // Lógica para otorgar créditos
+                        // Lógica para otorgar créditos si los dados son iguales
                         if (dado1.value == dado2.value) {
-                            if (dado1.value == 6) {
-                                creditos.value += 10
-                                Toast.makeText(LocalContext.current, "DAUS IGUALS! +10 créditos", Toast.LENGTH_SHORT).show()
-                            } else {
-                                creditos.value += 5
-                                Toast.makeText(LocalContext.current, "DAUS IGUALS! +5 créditos", Toast.LENGTH_SHORT).show()
+                            if (dado1.value == 6) { // Si ambos dados son 6
+                                creditos.value += 10 // Otorga 10 créditos
+                                Toast.makeText(LocalContext.current, "DAUS IGUALS! +10 créditos", Toast.LENGTH_SHORT).show() // Mensaje de éxito
+                            } else { // Si ambos dados son iguales pero no son 6
+                                creditos.value += 5 // Otorga 5 créditos
+                                Toast.makeText(LocalContext.current, "DAUS IGUALS! +5 créditos", Toast.LENGTH_SHORT).show() // Mensaje de éxito
                             }
                         }
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)), // Color del botón
                 modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .padding(bottom = 16.dp)
+                    .clip(RoundedCornerShape(20.dp)) // Esquinas redondeadas
+                    .padding(bottom = 16.dp) // Espaciado inferior
             ) {
                 Text(
                     text = "Rodar Dados (-2 créditos)",
@@ -304,29 +325,27 @@ fun DicesRollingScreen() {
                     color = Color.White
                 )
             }
-
-
-
         }
     }
 }
 
-
-@Preview(showBackground = true)
+// Vista previa de la pantalla de portada
+@Preview(showBackground = true) // Muestra un fondo en la vista previa
 @Composable
 fun PreviewRollTheDicePortada() {
-    Ej1Theme {
-        RollTheDicePortada(onJugarClick = {})
+    Ej1Theme { // Aplica el tema de la aplicación
+        RollTheDicePortada(onJugarClick = {}) // Llama a la función de la pantalla de portada sin acción en el clic
     }
 }
 
-@Preview(showBackground = true)
+// Vista previa de la pantalla de lanzamiento de dados
+@Preview(showBackground = true) // Muestra un fondo en la vista previa
 @Composable
 fun PreviewDicesRollingScreen() {
-    Ej1Theme {
-        DicesRollingScreen()
+    Ej1Theme { // Aplica el tema de la aplicación
+        DicesRollingScreen() // Llama a la función de la pantalla de lanzamiento de dados
     }
- }
+}
 
 
 
