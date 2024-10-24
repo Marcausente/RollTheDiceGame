@@ -12,12 +12,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -143,11 +147,76 @@ fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) 
 
 @Composable
 fun DicesRollingScreen() {
+    // Estado para el contador de créditos
+    val creditos = remember { mutableStateOf(100) }  // Inicializamos con 100 créditos
+
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "¡Aquí es donde los dados van a rodar!")
+        // Imagen de fondo
+        Image(
+            contentScale = ContentScale.FillBounds,
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = "Background",
+            modifier = Modifier
+                .fillMaxSize()
+                .matchParentSize()
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            // Contador de créditos en la parte superior
+            Text(
+                text = "Créditos: ${creditos.value}",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(Color.Gray.copy(alpha = 0.7f))
+                    .padding(16.dp)
+            )
+
+            // Aquí puedes agregar más contenido como los dados rodando
+            Text(
+                text = "¡Aquí es donde los dados van a rodar!",
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            )
+
+            // Espacio para agregar más interactividad
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Botón para simular una acción (como rodar los dados)
+            Button(
+                onClick = {
+                    // Acción simulada que resta créditos al usuario
+                    if (creditos.value > 0) {
+                        creditos.value -= 10
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .padding(bottom = 16.dp)
+            ) {
+                Text(
+                    text = "Rodar Dados (-10 créditos)",
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
+            }
+        }
     }
 }
 
@@ -156,5 +225,13 @@ fun DicesRollingScreen() {
 fun PreviewRollTheDicePortada() {
     Ej1Theme {
         RollTheDicePortada(onJugarClick = {})
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewDicesRollingScreen() {
+    Ej1Theme {
+        DicesRollingScreen()
     }
 }
