@@ -45,10 +45,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Ej1Theme {
-                // Recordamos el NavController
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // Llamamos a AppNavHost, que maneja la navegación
                     AppNavHost(navController = navController, modifier = Modifier.padding(innerPadding))
                 }
             }
@@ -56,7 +54,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// Definición de AppNavHost que maneja la navegación entre las pantallas
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController, startDestination = "portada") {
@@ -176,7 +173,6 @@ fun DicesRollingScreen() {
                     .padding(16.dp)
             )
 
-            // Aquí puedes agregar más contenido como los dados rodando
             Text(
                 text = "¡Aquí es donde los dados van a rodar!",
                 textAlign = TextAlign.Center,
