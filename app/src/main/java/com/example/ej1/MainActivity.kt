@@ -143,13 +143,11 @@ fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) 
 //PAGINA EN LA QUE RUEDAN
 @Composable
 fun DicesRollingScreen() {
-    // Estado para el contador de créditos
-    val creditos = remember { mutableStateOf(100) }  // Inicializamos con 100 créditos
+    val creditos = remember { mutableStateOf(10) }  // Inicializamos con 100 créditos
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Imagen de fondo
         Image(
             contentScale = ContentScale.FillBounds,
             painter = painterResource(id = R.drawable.background),
@@ -167,7 +165,6 @@ fun DicesRollingScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // Contador de créditos en la parte superior
             Text(
                 text = "Créditos: ${creditos.value}",
                 color = Color.White,
@@ -190,15 +187,12 @@ fun DicesRollingScreen() {
                     .padding(top = 16.dp)
             )
 
-            // Espacio para agregar más interactividad
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botón para simular una acción (como rodar los dados)
             Button(
                 onClick = {
-                    // Acción simulada que resta créditos al usuario
                     if (creditos.value > 0) {
-                        creditos.value -= 10
+                        creditos.value -= 2
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
@@ -207,7 +201,7 @@ fun DicesRollingScreen() {
                     .padding(bottom = 16.dp)
             ) {
                 Text(
-                    text = "Rodar Dados (-10 créditos)",
+                    text = "Rodar Dados (-2 créditos)",
                     fontSize = 20.sp,
                     color = Color.White
                 )
