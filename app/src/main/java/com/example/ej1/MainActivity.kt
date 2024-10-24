@@ -39,6 +39,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
 import com.example.ej1.ui.theme.Ej1Theme
 
 class MainActivity : ComponentActivity() {
@@ -187,9 +196,42 @@ fun DicesRollingScreen() {
                     .padding(top = 16.dp)
             )
 
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                // Dado 1
+                Image(
+                    painter = painterResource(id = getDiceImage(dado1.value)),
+                    contentDescription = "Dado 1",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clickable {
+                            if (creditos.value > 0) {
+                                creditos.value -= 1
+                                dado1.value = (1..6).random()
+                            }
+                        }
+                )
+
+                // Dado 2
+                Image(
+                    painter = painterResource(id = getDiceImage(dado2.value)),
+                    contentDescription = "Dado 2",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clickable {
+                            if (creditos.value > 0) {
+                                creditos.value -= 1
+                                dado2.value = (1..6).random()
+                            }
+                        }
+                )
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botón para rodar ambos dados
+
             Button(
                 onClick = {
                     if (creditos.value > 0) {
