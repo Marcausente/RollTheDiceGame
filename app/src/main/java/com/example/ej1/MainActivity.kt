@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.widget.Toast
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -187,10 +189,24 @@ fun DicesRollingScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Botón para rodar ambos dados
             Button(
                 onClick = {
                     if (creditos.value > 0) {
                         creditos.value -= 2
+                        dado1.value = (1..6).random()
+                        dado2.value = (1..6).random()
+
+                        // Lógica para otorgar créditos
+                        if (dado1.value == dado2.value) {
+                            if (dado1.value == 6) {
+                                creditos.value += 10
+                                Toast.makeText(LocalContext.current, "DAUS IGUALS! +10 créditos", Toast.LENGTH_SHORT).show()
+                            } else {
+                                creditos.value += 5
+                                Toast.makeText(LocalContext.current, "DAUS IGUALS! +5 créditos", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
@@ -203,12 +219,13 @@ fun DicesRollingScreen() {
                     fontSize = 20.sp,
                     color = Color.White
                 )
+            }
 
+
+
+                }
             }
         }
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable
