@@ -66,10 +66,10 @@ fun RollTheDicePortada(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp),
-            verticalArrangement = Arrangement.SpaceEvenly, // Distribuimos los elementos uniformemente
+            verticalArrangement = Arrangement.SpaceBetween, // Ajustamos el espacio entre los elementos
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Imagen del logo de la empresa (ahora encima del título)
+            // Logo de la empresa
             Image(
                 painter = painterResource(id = R.drawable.logo), // Reemplaza con el ID de tu logo
                 contentDescription = "Company Logo",
@@ -78,35 +78,38 @@ fun RollTheDicePortada(modifier: Modifier = Modifier) {
                     .clip(RoundedCornerShape(30.dp))
             )
 
-            // Título grande y estilizado
+            // Título grande y estilizado (más cerca del logo)
             Text(
                 "ROLL THE DICE",
                 textAlign = TextAlign.Center,
                 color = Color.White,
                 fontSize = 40.sp, // Título grande
-                fontWeight = FontWeight.Bold, // Negrita para que se vea más bonito
+                fontWeight = FontWeight.Bold, // Negrita
                 modifier = Modifier
                     .clip(RoundedCornerShape(30.dp))
-                    .background(Color.Gray.copy(alpha = 0.7f)) // Fondo transparente estilizado
+                    .background(Color.Gray.copy(alpha = 0.7f)) // Fondo estilizado
                     .padding(16.dp)
+                    .padding(top = 16.dp) // Ajustamos el espacio superior para acercarlo al logo
             )
 
-            // Imagen de los dados (centrado entre el título y el botón)
+            // Imagen de los dados (ajustada más arriba)
             Image(
-                painter = painterResource(id = R.drawable.dicemenu), // Reemplaza con el ID de tu imagen de dados
+                painter = painterResource(id = R.drawable.dicesmenu), // Reemplaza con el ID de tu imagen de dados
                 contentDescription = "Dice Image",
                 modifier = Modifier
-                    .size(200.dp) // Tamaño de los dados
+                    .size(180.dp) // Tamaño un poco reducido para que suba más
                     .clip(RoundedCornerShape(30.dp))
+                    .padding(top = 16.dp) // Reducimos el espacio superior
             )
 
-            // Botón para cambiar a la otra pantalla
+            // Botón para cambiar a la otra pantalla (subido más arriba)
             Button(
                 onClick = { /* Aquí pondrás la navegación a otra página cuando esté lista */ },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = 120.dp)
+                    .padding(top = 8.dp) // Reducimos el espacio superior para subir el botón
             ) {
                 Text(
                     text = "Jugar",
