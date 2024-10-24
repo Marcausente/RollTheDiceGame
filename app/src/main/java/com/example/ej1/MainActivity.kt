@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,6 +29,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.ej1.ui.theme.Ej1Theme
 
 class MainActivity : ComponentActivity() {
@@ -38,16 +41,34 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Ej1Theme {
+                // Recordamos el NavController
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RollTheDicePortada(modifier = Modifier.padding(innerPadding))
+                    // Llamamos a AppNavHost, que maneja la navegación
+                    AppNavHost(navController = navController, modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+// Definición de AppNavHost que maneja la navegación entre las pantallas
 @Composable
-fun RollTheDicePortada(modifier: Modifier = Modifier) {
+fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+    NavHost(navController = navController, startDestination = "portada") {
+        composable("portada") {
+            RollTheDicePortada(onJugarClick = {
+                navController.navigate("dicesrolling")
+            })
+        }
+        composable("dicesrolling") {
+            DicesRollingScreen()
+        }
+    }
+}
+
+@Composable
+fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) {
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -66,50 +87,49 @@ fun RollTheDicePortada(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp),
-            verticalArrangement = Arrangement.SpaceBetween, // Ajustamos el espacio entre los elementos
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Logo de la empresa
             Image(
-                painter = painterResource(id = R.drawable.logo), // Reemplaza con el ID de tu logo
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Company Logo",
                 modifier = Modifier
-                    .size(150.dp) // Tamaño del logo
+                    .size(150.dp)
                     .clip(RoundedCornerShape(30.dp))
             )
 
-            // Título grande y estilizado (más cerca del logo)
+            // Título grande y estilizado
             Text(
                 "ROLL THE DICE",
                 textAlign = TextAlign.Center,
                 color = Color.White,
-                fontSize = 40.sp, // Título grande
-                fontWeight = FontWeight.Bold, // Negrita
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .clip(RoundedCornerShape(30.dp))
-                    .background(Color.Gray.copy(alpha = 0.7f)) // Fondo estilizado
+                    .background(Color.Gray.copy(alpha = 0.7f))
                     .padding(16.dp)
-                    .padding(top = 16.dp) // Ajustamos el espacio superior para acercarlo al logo
+                    .padding(top = 16.dp)
             )
 
-            // Imagen de los dados (ajustada más arriba)
+            // Imagen de los dados
             Image(
-                painter = painterResource(id = R.drawable.dicesmenu), // Reemplaza con el ID de tu imagen de dados
+                painter = painterResource(id = R.drawable.dicesmenu),
                 contentDescription = "Dice Image",
                 modifier = Modifier
-                    .size(180.dp) // Tamaño un poco reducido para que suba más
+                    .size(180.dp)
                     .clip(RoundedCornerShape(30.dp))
-                    .padding(top = 16.dp) // Reducimos el espacio superior
+                    .padding(top = 16.dp)
             )
 
-            // Botón para cambiar a la otra pantalla (subido más arriba)
+            // Botón para cambiar a la pantalla de "DicesRolling"
             Button(
-                onClick = { /* Aquí pondrás la navegación a otra página cuando esté lista */ },
+                onClick = onJugarClick,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Gray.copy(alpha = 0.7f)),
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .padding(bottom = 120.dp)
-                    .padding(top = 8.dp) // Reducimos el espacio superior para subir el botón
+                    .padding(bottom = 16.dp)
+                    .padding(top = 8.dp)
             ) {
                 Text(
                     text = "Jugar",
@@ -121,10 +141,20 @@ fun RollTheDicePortada(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun DicesRollingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = "¡Aquí es donde los dados van a rodar!")
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewRollTheDicePortada() {
     Ej1Theme {
-        RollTheDicePortada()
+        RollTheDicePortada(onJugarClick = {})
     }
 }
