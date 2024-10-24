@@ -47,7 +47,16 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import kotlin.random.Random
+import android.widget.Button
+import android.widget.ImageView
+import java.util.*
 import com.example.ej1.ui.theme.Ej1Theme
 
 class MainActivity : ComponentActivity() {
@@ -59,10 +68,42 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavHost(navController = navController, modifier = Modifier.padding(innerPadding))
-                }
+
             }
         }
     }
+        lateinit var diceImage: ImageView
+
+        }
+    }
+
+@Composable
+fun DiceWithButtonAndImage(modifier: Modifier = Modifier .fillMaxSize() .wrapContentSize(Alignment.Center)) {
+    var result by remember { mutableStateOf( 1) }
+    val imageResource = when(result) {
+        1 -> R.drawable.dice_1
+        2 -> R.drawable.dice_2
+        3 -> R.drawable.dice_3
+        4 -> R.drawable.dice_4
+        5 -> R.drawable.dice_5
+        else -> R.drawable.dice_6
+    }
+
+    Column (
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = imageResource),
+            contentDescription = result.toString()
+
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { result = (1..6).random()}) {
+            Text("Dados tirados")
+        }
+    }
+
 }
 
 @Composable
@@ -145,27 +186,6 @@ fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) 
                     color = Color.White
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
-    var result by remember { mutableStateOf(1) }
-    val imageResource = when (result) {
-        1 -> R.drawable.dice_1
-        2 -> R.drawable.dice_2
-        3 -> R.drawable.dice_3
-        4 -> R.drawable.dice_4
-        5 -> R.drawable.dice_5
-        else -> R.drawable.dice_6
-    }
-
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painter = painterResource(imageResource), contentDescription = result.toString())
-
-        Button(onClick = { result = (1..6).random() }) {
-            Text(text = stringResource(R.string.roll), fontSize = 24.sp)
         }
     }
 }
@@ -306,6 +326,7 @@ fun PreviewDicesRollingScreen() {
     Ej1Theme {
         DicesRollingScreen()
     }
-}
+ }
+
 
 
