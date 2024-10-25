@@ -69,13 +69,13 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavHost(navController = navController, modifier = Modifier.padding(innerPadding))
 
+                }
             }
         }
-    }
         lateinit var diceImage: ImageView
 
-        }
     }
+}
 
 @Composable
 fun DiceWithButtonAndImage(modifier: Modifier = Modifier .fillMaxSize() .wrapContentSize(Alignment.Center)) {
@@ -108,19 +108,13 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier .fillMaxSize() .wrapCon
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
-    // Configura el NavHost que maneja la navegación entre diferentes pantallas
     NavHost(navController = navController, startDestination = "portada") {
-        // Define la ruta de la pantalla de inicio (portada)
         composable("portada") {
-            // Muestra la pantalla de portada
             RollTheDicePortada(onJugarClick = {
-                // Navega a la pantalla de lanzamiento de dados cuando se hace clic en "Jugar"
                 navController.navigate("dicesrolling")
             })
         }
-        // Define la ruta de la pantalla de lanzamiento de dados
         composable("dicesrolling") {
-            // Muestra la pantalla de lanzamiento de dados
             DicesRollingScreen()
         }
     }
@@ -129,52 +123,47 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
 //TODO ESTO ES LA PORTADA
 @Composable
 fun RollTheDicePortada(modifier: Modifier = Modifier, onJugarClick: () -> Unit) {
-    // Contenedor principal que ocupa toda la pantalla
     Box(
         modifier = Modifier.fillMaxSize() // Ocupa todo el tamaño disponible
     ) {
-        // Imagen de fondo que llena toda la pantalla
         Image(
-            contentScale = ContentScale.FillBounds, // Escala la imagen para llenar el espacio
-            painter = painterResource(id = R.drawable.background), // Carga la imagen de fondo
-            contentDescription = "Background", // Descripción para accesibilidad
+            contentScale = ContentScale.FillBounds,
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = "Background",
             modifier = Modifier
-                .fillMaxSize() // Ocupa todo el tamaño disponible
-                .matchParentSize() // Asegura que coincida con el tamaño del padre
+                .fillMaxSize()
+                .matchParentSize()
         )
 
-        // Columna que organiza los elementos verticalmente
         Column(
             modifier = Modifier
-                .fillMaxSize() // Ocupa todo el tamaño disponible
-                .padding(20.dp), // Espaciado alrededor de la columna
-            verticalArrangement = Arrangement.SpaceBetween, // Espaciado uniforme entre los elementos
-            horizontalAlignment = Alignment.CenterHorizontally // Alineación horizontal centrada
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Logo de la compañía
             Image(
-                painter = painterResource(id = R.drawable.logo), // Carga la imagen del logo
-                contentDescription = "Company Logo", // Descripción para accesibilidad
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Company Logo",
                 modifier = Modifier
-                    .size(150.dp) // Tamaño del logo
-                    .clip(RoundedCornerShape(30.dp)) // Esquinas redondeadas
+                    .size(150.dp)
+                    .clip(RoundedCornerShape(30.dp))
             )
 
-            // Título del juego
             Text(
-                "ROLL THE DICE", // Texto que se mostrará
-                textAlign = TextAlign.Center, // Alineación centrada
-                color = Color.White, // Color del texto
-                fontSize = 40.sp, // Tamaño de la fuente
-                fontWeight = FontWeight.Bold, // Peso de la fuente (negrita)
+                "ROLL THE DICE",
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(30.dp)) // Esquinas redondeadas
-                    .background(Color.Gray.copy(alpha = 0.7f)) // Fondo gris con transparencia
-                    .padding(16.dp) // Espaciado interno
-                    .padding(top = 16.dp) // Espaciado superior adicional
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(Color.Gray.copy(alpha = 0.7f))
+                    .padding(16.dp)
+                    .padding(top = 16.dp)
             )
 
-            // Imagen de los dados en el menú
             Image(
                 painter = painterResource(id = R.drawable.dicesmenu), // Carga la imagen de los dados
                 contentDescription = "Dice Image", // Descripción para accesibilidad
@@ -346,6 +335,5 @@ fun PreviewDicesRollingScreen() {
         DicesRollingScreen() // Llama a la función de la pantalla de lanzamiento de dados
     }
 }
-
 
 
