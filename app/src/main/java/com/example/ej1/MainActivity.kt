@@ -1,5 +1,4 @@
 //Marc Fernández
-//Roger Jové
 package com.example.ej1
 import android.os.Bundle
 import android.content.Context
